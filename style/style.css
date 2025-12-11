@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    background-color: var(--bleu-fond);
+    color: var(--blanc);
+    font-family: 'Montserrat';
+}
+
+:root {
+    --bleu-fond: #010A1A;
+    --vert: #A3FF00;
+    --bleu: #00CFFF;
+    --blanc: #FFFFFF;
+    --gris: #B3B3B3;
+    --bleu-fonce: #1A1A2E;
+}
+
+.accueil {
+    background-image: url(../img/fond.png);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.donnée {
+    display: flex;
+    gap: 20px;
+}
+
+.vert {
+    padding: 34px;
+    border: 2px solid var(--vert);
+}
+
+.bleu {
+    padding: 34px;
+    border: 2px solid var(--bleu);
+}
