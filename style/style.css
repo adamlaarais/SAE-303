@@ -2,7 +2,8 @@ body {
     margin: 0;
     background-color: var(--bleu-fond);
     color: var(--blanc);
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
 }
 
 :root {
@@ -11,29 +12,147 @@ body {
     --bleu: #00CFFF;
     --blanc: #FFFFFF;
     --gris: #B3B3B3;
-    --bleu-fonce: #1A1A2E;
+    --bleu-fonce: #1A1A2E; 
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .accueil {
     background-image: url(../img/fond.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    width: 100%;
     padding: 0 20px;
+}
+
+.accueil-content {
+    max-width: 650px;
+    padding-top: 50px;
+}
+
+h1 {
+    font-size: 4.5em;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 10px 0;
+}
+
+.degrade-title {
+    background: linear-gradient(to right, var(--vert), var(--bleu));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.accueil p {
+    color: var(--gris);
+    font-size: 1.1em;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+/* Conteneur des Cartes et Icône */
+.data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px; 
 }
 
 .donnée {
     display: flex;
-    gap: 20px;
+    gap: 30px;
+    z-index: 2; 
 }
 
+/* Styles des cartes */
+.card {
+    background-color: var(--bleu-fonce);
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 180px;
+    height: 90px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card p {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: var(--gris);
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.value {
+    font-size: 2.5em;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+/* Couleurs et lueurs spécifiques */
 .vert {
-    padding: 34px;
     border: 2px solid var(--vert);
+    box-shadow: 
+        0 0 15px rgba(163, 255, 0, 0.3), 
+        inset 0 0 8px rgba(163, 255, 0, 0.4);
+}
+.vert .value {
+    color: var(--vert);
 }
 
 .bleu {
-    padding: 34px;
     border: 2px solid var(--bleu);
+    box-shadow: 
+        0 0 15px rgba(0, 207, 255, 0.3), 
+        inset 0 0 8px rgba(0, 207, 255, 0.4);
+}
+.bleu .value {
+    color: var(--bleu);
+}
+
+/* Icône de l'Éclair/Scroll */
+.scroll-icon {
+    margin-top: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--bleu-fond);
+    border: 2px solid var(--vert); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 
+        0 0 15px var(--vert), 
+        inset 0 0 10px var(--vert);
+    transition: box-shadow 0.3s ease, transform 0.3s ease-out;
+}
+
+.scroll-icon:hover {
+    transform: scale(1.1);
+}
+
+.scroll-icon svg {
+    width: 35px;
+    height: 35px;
+    transition: transform 0.6s ease-in-out; 
+}
+
+.scroll-icon:hover svg {
+    transform: rotate(360deg); 
 }
