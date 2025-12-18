@@ -15,6 +15,101 @@ body {
     --bleu-fonce: #1A1A2E; 
 }
 
+#loader-wrapper {
+    position: fixed;
+    inset: 0;
+    background-color: var(--bleu-fond);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.5s ease;
+}
+
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Batterie Horizontale */
+.giant-battery.horizontal {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 450px; 
+    height: 180px;
+}
+
+.battery-core {
+    position: relative;
+    flex-grow: 1;
+    height: 100%;
+    border: 6px solid var(--bleu);
+    border-radius: 12px;
+    padding: 6px;
+    background: rgba(26, 26, 46, 0.5);
+    overflow: hidden;
+    display: flex;
+    align-items: center; 
+}
+
+.battery-cap {
+    width: 12px;
+    height: 40px;
+    background-color: var(--bleu);
+    border-radius: 0 4px 4px 0;
+    margin-left: -2px; 
+}
+
+/* Remplissage Horizontal */
+.charge-level {
+    height: 100%;
+    background: linear-gradient(to right, var(--bleu), var(--vert));
+    width: 0%;
+    animation: fillingHorizontal 2.5s forwards ease-in-out;
+}
+
+/* Éclair centré */
+.bolt-finish {
+    position: absolute;
+    width: 90px;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+    filter: drop-shadow(0 0 10px var(--bleu-fonce));
+    animation: boltAppearSync 2.5s forwards;
+}
+
+@keyframes fillingHorizontal {
+    0% { width: 0%; opacity: 0.5; }
+    80%, 100% { width: 100%; opacity: 1; }
+}
+
+@keyframes boltAppearSync {
+    0%, 80% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    90% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Texte de chargement plus lisible */
+.loader-text {
+    margin-top: 40px;
+    color: var(--blanc);
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-size: 1.2em; /* Texte un peu plus grand */
+}
+
+.loader-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
 main {
     display: flex;
     justify-content: center;

@@ -9,6 +9,21 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 </head>
 <body>
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <div class="giant-battery horizontal">
+                <div class="battery-core">
+                    <svg class="bolt-finish" viewBox="0 0 32 40">
+                        <path d="M21.3719 0.422555L0.651878 18.9826C-0.628122 20.1426 0.0918777 22.2826 1.81188 22.4426L17.9919 24.0026L8.29188 37.5226C7.85188 38.1426 7.91188 39.0026 8.45188 39.5426C9.05188 40.1426 9.99188 40.1626 10.6119 39.5826L31.3319 21.0226C32.6119 19.8626 31.8919 17.7226 30.1719 17.5626L13.9919 16.0026L23.6919 2.48256C24.1319 1.86256 24.0719 1.00255 23.5319 0.462555C23.2491 0.173784 22.8642 0.00774747 22.4601 0.000264311C22.056 -0.00721885 21.6651 0.144452 21.3719 0.422555Z" fill="var(--vert)"/>
+                    </svg>
+                    <div class="charge-level"></div>
+                </div>
+                <div class="battery-cap"></div>
+            </div>
+            <p class="loader-text">DataWatt en chargement...</p>
+        </div>
+    </div>
+
     <main>
         <section class="accueil">
             <div class="accueil-content">
@@ -40,5 +55,8 @@
             </div>
         </section>
     </main>
+
+    <script src="js/bornes-irve.json"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
