@@ -15,20 +15,102 @@ window.addEventListener('load', async () => {
     let totalPdc = 0;
     let totalPuissance = 0;
     let nbBornesAvecPuissance = 0;
+    const deptStats = {}; // Clé: "FR-XX" (ex: FR-69)
 
     data.forEach(borne => {
-        totalPdc += borne.nbre_pdc ? parseInt(borne.nbre_pdc) : 1;
+        const pdc = borne.nbre_pdc ? parseInt(borne.nbre_pdc) : 1;
+        totalPdc += pdc;
 
         if (borne.puiss_max) {
             totalPuissance += parseFloat(borne.puiss_max);
             nbBornesAvecPuissance++;
+        }
+
+        // Aggrégation par département via code insee
+        // Le code insee commune (ex: "69123") permet de déduire le département ("69")
+        if (borne.code_insee_commune) {
+            let codeDept = borne.code_insee_commune.toString().trim();
+
+            // Gestion départements standards (01 à 95) et Corse (2A, 2B)
+            // On prend les 2 premiers caractères
+            if (codeDept.length >= 2) {
+                codeDept = codeDept.substring(0, 2);
+                // Si c'est un DOM (97), on pourrait avoir besoin de 3 chiffres, mais la carte semble être France métro
+                // On garde la logique simple FR-XX pour l'instant
+            }
+
+            const deptKey = `FR-${codeDept}`;
+
+            if (!deptStats[deptKey]) {
+                // Initialisation si pas encore rencontré
+                // On essaie de capturer le nom du département s'il est présent dans la donnée
+                deptStats[deptKey] = {
+                    count: 0,
+                    name: borne.departement || `Département ${codeDept}`
+                };
+            }
+
+            deptStats[deptKey].count += pdc;
+
+            // Mise å jour du nom si on trouve une donnée plus propre (non vide)
+            if (borne.departement && deptStats[deptKey].name.startsWith('Département')) {
+                deptStats[deptKey].name = borne.departement;
+            }
         }
     });
 
     // Moyenne de puissance en kW
     const moyennePuissance = nbBornesAvecPuissance > 0 ? (totalPuissance / nbBornesAvecPuissance).toFixed(1) : 0;
 
-    // Affichage direct sans animation
-    document.querySelector('.vert.card .value').textContent = totalPdc.toLocaleString();
-    document.querySelector('.bleu.card .value').textContent = moyennePuissance + " kW";
+    // Affichage des KPIs globaux
+    const vertCard = document.querySelector('.vert.card .value');
+    if (vertCard) vertCard.textContent = totalPdc.toLocaleString();
+
+    const bleuCard = document.querySelector('.bleu.card .value');
+    if (bleuCard) bleuCard.textContent = moyennePuissance + " kW";
+
+    // 3. Gestion de la Carte Interactive
+    const tooltip = document.getElementById('tooltip');
+
+    // Sélectionner tous les éléments qui ont un ID commençant par FR-
+    // Cela inclut les <g> et les <path> directs
+    const mapElements = document.querySelectorAll('.france [id^="FR-"]');
+
+    mapElements.forEach((element) => {
+        element.addEventListener('mouseenter', (e) => {
+            const id = element.id; // Ex: FR-69
+            const deptData = deptStats[id];
+
+            const regionName = deptData ? deptData.name : "Données indisponibles";
+            const count = deptData ? deptData.count : 0;
+
+            if (tooltip) {
+                tooltip.innerHTML = `
+                    <h3>${regionName}</h3>
+                    <p>Bornes disponibles</p>
+                    <span class="count">${count.toLocaleString()}</span>
+                `;
+                tooltip.style.display = 'block';
+            }
+
+            // Effet visuel : déplacer l'élément à la fin du conteneur pour qu'il soit au-dessus (z-index SVG)
+            if (element.nextSibling) {
+                element.parentNode.appendChild(element);
+            }
+        });
+
+        element.addEventListener('mousemove', (e) => {
+            if (tooltip) {
+                // Positionner le tooltip près de la souris avec un léger décalage pour ne pas gêner
+                tooltip.style.left = `${e.clientX + 15}px`;
+                tooltip.style.top = `${e.clientY + 15}px`;
+            }
+        });
+
+        element.addEventListener('mouseleave', () => {
+            if (tooltip) {
+                tooltip.style.display = 'none';
+            }
+        });
+    });
 });

@@ -11,7 +11,7 @@ body {
 }
 
 body::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 :root {
@@ -296,4 +296,68 @@ h1 {
 section p {
     text-align: center;
     color: var(--gris);
+}
+
+/* Carte Interactive */
+.france {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.france svg {
+    max-height: 65vh;
+    width: auto;
+    max-width: 100%;
+}
+
+.france svg path {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), fill 0.3s ease;
+    cursor: pointer;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.france svg path:hover {
+    transform: scale(1.1);
+    z-index: 10;
+    stroke: var(--blanc);
+    stroke-width: 4px;
+}
+
+/* Tooltip */
+.tooltip {
+    position: fixed;
+    background-color: var(--bleu-fonce);
+    border: 1px solid var(--vert);
+    padding: 10px 20px;
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: 1000;
+    transform: translate(-50%, -120%);
+    text-align: center;
+    min-width: 150px;
+}
+
+.tooltip h3 {
+    margin: 0 0 5px 0;
+    color: var(--vert);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.tooltip p {
+    margin: 0;
+    color: var(--blanc);
+    font-size: 0.9rem;
+}
+
+.tooltip .count {
+    color: var(--bleu);
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: block;
+    margin-top: 5px;
 }
