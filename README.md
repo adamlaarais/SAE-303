@@ -1,0 +1,2 @@
+Réalisé dans le cadre d'une SAE, ce projet est une application de gestion et de visualisation des bornes de recharge électriques. Elle permet aux utilisateurs de rechercher, consulter et localiser les stations disponibles sur le territoire via une interface dédiée.
+L'application s'appuie sur un jeu de données réelles (Open Data). Le fichier JSON utilisé pour référencer les bornes provient de cette source officielle : https://www.data.gouv.fr/datasets/bornes-de-recharge-pour-vehicules-electriques-3
