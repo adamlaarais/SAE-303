@@ -467,27 +467,13 @@ section p {
     box-shadow: 0 0 10px rgba(163, 255, 0, 0.3);
 }
 
-/* Responsive */
-@media (max-width: 1100px) {
-    .content-carte {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .top-regions {
-        width: 100%;
-        max-width: 600px;
-    }
-}
-
 /* --- Section Puissance (Batteries) --- */
 
 .power-charts {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 80px;
-    /* Plus d'espace entre les batteries */
+    gap: 88px;
     flex-wrap: wrap;
     margin-top: 50px;
     width: 100%;
@@ -498,12 +484,12 @@ section p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .battery-visual {
     width: 120px;
-    height: 300px;
+    height: 340px;
     position: relative;
     display: flex;
     flex-direction: column-reverse;

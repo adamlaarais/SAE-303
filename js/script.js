@@ -167,7 +167,7 @@ window.addEventListener('load', async () => {
     const bleuCard = document.querySelector('.bleu.card .value');
     if (bleuCard) bleuCard.textContent = moyennePuissance + " kW";
 
-    // 3. Gestion de la Carte Interactive
+    //  Gestion de la Carte Interactive
     const tooltip = document.getElementById('tooltip');
 
     // Sélectionner tous les éléments qui ont un ID commençant par FR-
