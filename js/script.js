@@ -1,5 +1,5 @@
 window.addEventListener('load', async () => {
-    // 1. Loader
+    // Loader
     const loader = document.getElementById('loader-wrapper');
     if (loader) {
         setTimeout(() => {
@@ -8,7 +8,7 @@ window.addEventListener('load', async () => {
         }, 2500);
     }
 
-    // 2. Récupération des données
+    // Récupération des données
     const response = await fetch('js/bornes-irve.json');
     const data = await response.json();
 
@@ -59,7 +59,7 @@ window.addEventListener('load', async () => {
         }
     });
 
-    // 2b. Top 5 Régions
+    // Top 5 Régions
     const sortedRegions = Object.values(deptStats).sort((a, b) => b.count - a.count).slice(0, 5);
     const topRegionsContainer = document.getElementById('regions-list');
 
@@ -80,25 +80,9 @@ window.addEventListener('load', async () => {
                 </div>
             `;
         }).join('');
-
-        // Animation des barres au chargement (petit délai pour l'effet visuel)
-        setTimeout(() => {
-            const bars = document.querySelectorAll('.bar-fill');
-            bars.forEach(bar => {
-                // On force un reflow ou on utilise une classe si besoin, 
-                // mais ici l'insertion HTML avec style="width: X%" pourrait déjà afficher la barre pleine.
-                // Pour animer, il vaut mieux initialiser à 0 puis mettre la valeur.
-                // On va refaire la logique d'animation :
-                const targetWidth = bar.style.width;
-                bar.style.width = '0%';
-                requestAnimationFrame(() => {
-                    bar.style.width = targetWidth;
-                });
-            });
-        }, 100);
     }
 
-    // 2c. Distribution de la Puissance
+    // Distribution de la Puissance
     const powerBuckets = {
         'low': { min: 0, max: 3.7, count: 0 },         // <= 3.7
         'medium-low': { min: 3.7, max: 7.4, count: 0 }, // > 3.7 - 7.4
