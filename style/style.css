@@ -27,6 +27,7 @@ body::-webkit-scrollbar {
     --blanc: #FFFFFF;
     --gris: #B3B3B3;
     --bleu-fonce: #1A1A2E;
+    --cyan: #3FE29C;
 }
 
 section {
@@ -549,4 +550,175 @@ section p {
     font-weight: 700;
     font-size: 1.8rem;
     text-shadow: none;
+}
+
+/* --- Section Mise à Jour --- */
+
+.maj {
+    height: 100vh;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+
+.maj-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 70%;
+    max-width: 1600px;
+    /* Wider container */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.chart-container {
+    flex: 5;
+    /* Much wider chart */
+    min-width: 0;
+    height: 100%;
+    max-height: 500px;
+    position: relative;
+    background: transparent !important;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* KPI Cards Container */
+.kpi-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    flex: 1;
+    height: 100%;
+    max-height: 500px;
+    max-width: 350px;
+}
+
+/* Base KPI Card Style */
+.kpi-card {
+    background-color: var(--bleu-fonce);
+    border-radius: 15px;
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+}
+
+.kpi-icon {
+    margin-bottom: 5px;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 5px;
+}
+
+.kpi-label {
+    color: var(--gris);
+    font-size: 0.85rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Variantes de couleurs strictes */
+
+/* Carte 1: Verte (Périodes) */
+.kpi-card.glow-green {
+    box-shadow: 0 0 15px rgba(163, 255, 0, 0.15);
+    border-color: var(--vert);
+}
+
+.kpi-card.glow-green:hover {
+    box-shadow: 0 0 25px rgba(163, 255, 0, 0.3);
+}
+
+.kpi-card.glow-green .kpi-value {
+    color: var(--vert);
+}
+
+/* Carte 2: Bleue (Total) */
+.kpi-card.glow-blue {
+    box-shadow: 0 0 15px rgba(0, 207, 255, 0.15);
+    border-color: var(--bleu);
+}
+
+.kpi-card.glow-blue:hover {
+    box-shadow: 0 0 25px rgba(0, 207, 255, 0.3);
+}
+
+.kpi-card.glow-blue .kpi-value {
+    color: var(--bleu);
+}
+
+/* Carte 3: Cyan (Moyenne) */
+.kpi-card.glow-cyan {
+    box-shadow: 0 0 15px rgba(63, 226, 156, 0.15);
+    border-color: #3FE29C;
+}
+
+.kpi-card.glow-cyan:hover {
+    box-shadow: 0 0 25px rgba(63, 226, 156, 0.3);
+}
+
+.kpi-card.glow-cyan .kpi-value {
+    color: #3FE29C;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .maj {
+        height: auto;
+        padding: 40px 0;
+        overflow: visible;
+    }
+
+    .maj-content {
+        flex-direction: column;
+        height: auto;
+        gap: 40px;
+    }
+
+    .chart-container {
+        width: 95%;
+        height: 300px;
+        flex: none;
+    }
+
+    .kpi-container {
+        width: 100%;
+        height: auto;
+        max-width: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .kpi-card {
+        width: 250px;
+        flex: none;
+        height: 150px;
+    }
 }

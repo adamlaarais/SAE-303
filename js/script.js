@@ -195,4 +195,228 @@ window.addEventListener('load', async () => {
             }
         });
     });
+
+    // --- Graphique Mise à jour ---
+    const ctxUpdates = document.getElementById('updatesChart');
+    if (ctxUpdates) {
+        // Injection des données dynamiques (KPIs)
+        const kpiPeriodes = document.getElementById('kpi-periodes');
+        const kpiTotal = document.getElementById('kpi-total');
+        const kpiMoyenne = document.getElementById('kpi-moyenne');
+
+        // Animation des compteurs (KPIs)
+        const animateCountUp = (element, target, duration) => {
+            let start = 0;
+            const step = Math.ceil(target / (duration / 16));
+            const timer = setInterval(() => {
+                start += step;
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = start;
+                }
+            }, 16);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (kpiPeriodes) animateCountUp(kpiPeriodes, 5, 1000);
+                    if (kpiTotal) animateCountUp(kpiTotal, 3790, 2000);
+                    if (kpiMoyenne) animateCountUp(kpiMoyenne, 6378, 2000);
+                    observer.disconnect(); // Run only once
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (kpiPeriodes) observer.observe(kpiPeriodes);
+        // Plugin pour la ligne verticale personnalisée
+        const verticalLinePlugin = {
+            id: 'verticalLine',
+            afterDraw: (chart) => {
+                if (chart.tooltip?._active?.length) return; // Hide if tooltip is active (optional, but keep simple for now)
+
+                const ctx = chart.ctx;
+                const xAxis = chart.scales.x;
+                const yAxis = chart.scales.y;
+
+                // Index de 2018 (0: 2017, 1: 2018...)
+                const indexToDraw = 1;
+                const x = xAxis.getPixelForValue(2018); // Value on X axis
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(x, yAxis.top);
+                ctx.lineTo(x, yAxis.bottom);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#00CFFF'; // Cyan color
+                ctx.stroke();
+                ctx.restore();
+
+                // Point brillant au croisement
+                const yPoint = chart.getDatasetMeta(0).data[indexToDraw].y;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(x, yPoint, 6, 0, 2 * Math.PI);
+                ctx.fillStyle = '#A3FF00'; // Center Green
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#1A1A2E'; // Border dark
+                ctx.stroke();
+                ctx.restore();
+
+                // Tooltip statique pour 2018
+                // Draw custom box
+                const text = "Nombre de stations : 1005";
+                const label = "2018";
+
+                ctx.save();
+                // Position relative to point
+                const boxX = x + 15;
+                const boxY = yPoint - 40;
+                const boxWidth = 180;
+                const boxHeight = 50;
+                const radius = 8;
+
+                ctx.beginPath();
+                ctx.roundRect(boxX, boxY, boxWidth, boxHeight, radius);
+                ctx.fill();
+                ctx.stroke();
+
+                // Text
+                ctx.fillStyle = '#B3B3B3';
+                ctx.font = '12px Montserrat';
+                ctx.fillText(label, boxX + 15, boxY + 20);
+
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = 'bold 13px Montserrat';
+                // highlight count
+                ctx.fillText("Nombre de stations : ", boxX + 15, boxY + 40);
+
+                const textWidth = ctx.measureText("Nombre de stations : ").width;
+                ctx.fillStyle = '#00CFFF'; // Cyan highlight
+                ctx.fillText("1005", boxX + 15 + textWidth, boxY + 40);
+
+                ctx.restore();
+            }
+        };
+
+        const gradient = ctxUpdates.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, '#A3FF00'); // Green top
+        gradient.addColorStop(1, '#00CFFF00'); // Transparent Blue bottom
+
+        // Line Gradient
+        const strokeGradient = ctxUpdates.getContext('2d').createLinearGradient(0, 0, 400, 0);
+        strokeGradient.addColorStop(0, '#A3FF00');
+        strokeGradient.addColorStop(1, '#00CFFF'); // Green to Cyan
+
+        new Chart(ctxUpdates, {
+            type: 'line',
+            data: {
+                labels: ['2017', '2018', '2019', '2020', '2021'],
+                datasets: [{
+                    label: 'Mises à jour',
+                    data: [200, 1005, 700, 2500, 3800],
+                    // 1. Line: Linear Gradient & Glow
+                    // 1. Line: Linear Gradient & Glow (Project Colors)
+                    // 1. Line: Real Linear Gradient (Project Colors)
+                    borderColor: (context) => {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+                        if (!chartArea) return null;
+                        const gradient = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+                        gradient.addColorStop(0, '#A3FF00'); // Var --vert (Start)
+                        gradient.addColorStop(1, '#00CFFF'); // Var --bleu (End)
+                        return gradient;
+                    },
+                    borderWidth: 5,
+                    tension: 0.4,
+                    // Glow Effect Removed per user request
+
+                    // 2. Fill: Subtle Vertical Gradient
+                    fill: true,
+                    backgroundColor: (context) => {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+                        if (!chartArea) return null;
+                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                        gradient.addColorStop(0, 'rgba(163, 255, 0, 0.2)'); // Green opacity
+                        gradient.addColorStop(1, 'rgba(0, 207, 255, 0)'); // Blue/Transparent
+                        return gradient;
+                    },
+
+                    pointRadius: 0,
+                    pointHitRadius: 30,
+                    pointHoverRadius: 8,
+                    pointHoverBackgroundColor: '#A3FF00',
+                    pointHoverBorderColor: '#fff',
+                    pointHoverBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                },
+                layout: {
+                    padding: 20
+                },
+                plugins: {
+                    legend: { display: false },
+                    // 4. Heavily Styled Native Tooltip
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#1E1E2F', // Dark background
+                        titleColor: '#fff',
+                        bodyColor: '#B3B3B3', // gris
+                        borderColor: '#A3FF00', // Neon Green border
+                        borderWidth: 2,
+                        cornerRadius: 12,
+                        padding: 15,
+                        displayColors: false,
+                        titleFont: { family: 'Montserrat', size: 14, weight: 'bold' },
+                        bodyFont: { family: 'Montserrat', size: 13 },
+                        callbacks: {
+                            title: (items) => `Année ${items[0].label}`,
+                            label: (ctx) => `${ctx.parsed.y} Stations`
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: {
+                            color: '#B3B3B3',
+                            font: { family: 'Montserrat', size: 12 },
+                            padding: 10
+                        }
+                    },
+                    y: {
+                        // 3. Horizontal Grid: Dotted & Transparent
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)',
+                            borderDash: [5, 5],
+                            drawBorder: false
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#B3B3B3',
+                            font: { family: 'Montserrat', size: 12 },
+                            padding: 10
+                        },
+                        beginAtZero: true
+                    }
+                }
+            },
+            plugins: [verticalLinePlugin]
+        });
+    }
 });

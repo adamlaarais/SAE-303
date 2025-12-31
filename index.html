@@ -1378,15 +1378,61 @@
         <section class="maj">
             <h1><span class="degrade-title">Mise à jour</span> du Réseau</h1>
             <p>Chronologie des mises à jour et maintenance du réseau</p>
+
+            <div class="maj-content">
+                <div class="chart-container">
+                    <canvas id="updatesChart"></canvas>
+                </div>
+                <div class="kpi-container">
+                    <div class="kpi-card glow-green">
+                        <div class="kpi-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#A3FF00" stroke="#A3FF00"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div id="kpi-periodes" class="kpi-value"></div>
+                        <div class="kpi-label">Périodes de mise à jour</div>
+                    </div>
+
+                    <div class="kpi-card glow-cyan">
+                        <div class="kpi-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#3FE29C" stroke-width="2" />
+                                <path d="M12 6V12L16 14" stroke="#3FE29C" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div id="kpi-moyenne" class="kpi-value"></div>
+                        <div class="kpi-label">Moyenne par période</div>
+                    </div>
+
+                    <div class="kpi-card glow-blue">
+                        <div class="kpi-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23 6L13.5 15.5L8.5 10.5L1 18" stroke="#00CFFF" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M17 6H23V12" stroke="#00CFFF" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div id="kpi-total" class="kpi-value" style="color: #00CFFF;"></div>
+                        <div class="kpi-label">Total de mise à jour</div>
+                    </div>
+
+                </div>
+            </div>
         </section>
 
     </main>
 
     <div id="tooltip" class="tooltip" style="display: none;"></div>
 
-    <script src="js/bornes-data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/chart.js"></script>
 </body>
 
 </html>
