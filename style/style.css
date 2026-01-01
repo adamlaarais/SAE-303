@@ -592,8 +592,6 @@ section p {
     padding: 0 20px;
     background: transparent;
     overflow-x: auto;
-    /* Allow scroll on small screens */
-    /* Hide scrollbar */
     scrollbar-width: none;
 }
 
@@ -724,11 +722,8 @@ section p {
     transform: translateY(-15px) scale(1.1);
     z-index: 10;
     filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.4));
-    /* Fallback color */
 }
 
-/* Intensify glow based on gradient position? 
-   Hard to do perfectly without JS, but we can boost brightness */
 .hex-item:hover .hex-border {
     opacity: 1;
     filter: brightness(1.5);
@@ -838,7 +833,6 @@ section p {
     max-width: 350px;
 }
 
-/* Base KPI Card Style */
 /* Base KPI Card Style */
 .kpi-card {
     background-color: var(--bleu-fonce);

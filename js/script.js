@@ -225,32 +225,10 @@ window.addEventListener('load', async () => {
     const numberOfYears = sortedYears.length;
     const averageUpdates = numberOfYears > 0 ? Math.round(totalUpdates / numberOfYears) : 0;
 
-    const animateCountUp = (element, target, duration) => {
-        let start = 0;
-        const step = Math.ceil(target / (duration / 16));
-        const timer = setInterval(() => {
-            start += step;
-            if (start >= target) {
-                element.textContent = target.toLocaleString();
-                clearInterval(timer);
-            } else {
-                element.textContent = start.toLocaleString();
-            }
-        }, 16);
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                if (kpiPeriodes) animateCountUp(kpiPeriodes, numberOfYears, 1000);
-                if (kpiTotal) animateCountUp(kpiTotal, totalUpdates, 2000);
-                if (kpiMoyenne) animateCountUp(kpiMoyenne, averageUpdates, 2000);
-                observer.disconnect();
-            }
-        });
-    }, { threshold: 0.5 });
-
-    if (kpiPeriodes) observer.observe(kpiPeriodes);
+    // Affichage direct (sans animation)
+    if (kpiPeriodes) kpiPeriodes.textContent = numberOfYears.toLocaleString();
+    if (kpiTotal) kpiTotal.textContent = totalUpdates.toLocaleString();
+    if (kpiMoyenne) kpiMoyenne.textContent = averageUpdates.toLocaleString();
 
     // --- Timeline Hexagon Generator (Dynamic from JSON) ---
     const timelineContainer = document.getElementById('hex-timeline');
@@ -264,7 +242,6 @@ window.addEventListener('load', async () => {
         recentYears.forEach((year, index) => {
             const count = majByYear[year];
             const label = "Mise à jour"; // Static label requested by user
-
             // Création de l'élément Hexagone
             const hexItem = document.createElement('div');
             hexItem.classList.add('hex-item');
