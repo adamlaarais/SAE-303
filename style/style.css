@@ -981,39 +981,3 @@ section p {
         transform: translateY(0);
     }
 }
-
-/* Responsive adjustments */
-@media (max-width: 900px) {
-    .maj {
-        height: auto;
-        padding: 40px 0;
-        overflow: visible;
-    }
-
-    .maj-content {
-        flex-direction: column;
-        height: auto;
-        gap: 40px;
-    }
-
-    .chart-container {
-        width: 95%;
-        height: 300px;
-        flex: none;
-    }
-
-    .kpi-container {
-        width: 100%;
-        height: auto;
-        max-width: none;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .kpi-card {
-        width: 250px;
-        flex: none;
-        height: 150px;
-    }
-}
