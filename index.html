@@ -1380,9 +1380,11 @@
             <p>Chronologie des mises à jour et maintenance du réseau</p>
 
             <div class="maj-content">
-                <div class="chart-container">
-                    <canvas id="updatesChart"></canvas>
+                <div class="hex-timeline-wrapper">
+                    <div id="hex-timeline" class="hex-timeline">
+                    </div>
                 </div>
+
                 <div class="kpi-container">
                     <div class="kpi-card glow-green">
                         <div class="kpi-icon">
@@ -1431,7 +1433,6 @@
 
     <div id="tooltip" class="tooltip" style="display: none;"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/script.js"></script>
 </body>
 
