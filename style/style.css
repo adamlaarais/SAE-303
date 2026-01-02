@@ -975,3 +975,253 @@ section p {
         transform: translateY(0);
     }
 }
+
+/* --- SECTION EXPERIENCE REDESIGN (Orbital Visualization) --- */
+
+.experience {
+    position: relative;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.experience-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Orbital System Container */
+.orbital-system {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-40px);
+    /* Nudged up slightly for better optical centering */
+}
+
+/* The Orbit Track (Dashed Ring) */
+.orbit-track {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: orbitSpin 60s linear infinite;
+    z-index: 1;
+}
+
+@keyframes orbitSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Central Core */
+.core-planet {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    box-shadow: 0 0 50px rgba(0, 229, 255, 0.2);
+}
+
+.core-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 50%;
+    animation: corePulse 3s infinite ease-out;
+}
+
+@keyframes corePulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Orbit Nodes (Satellites) */
+.orbit-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+    width: 140px;
+    /* Slightly wider to prevent text wrap */
+    pointer-events: auto;
+}
+
+
+/* Solar System Animation Logic */
+/* Start at center, Rotate System, Move Out, Rotate Self back */
+/* Radius = 190px (380px track / 2) */
+
+@keyframes solarOrbit {
+    from {
+        transform: rotate(0deg) translateX(190px) rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg) translateX(190px) rotate(-360deg);
+    }
+}
+
+.planet {
+    top: 50%;
+    left: 50%;
+    /* Align the center of the ICON (64x64) with the ring.
+       Icon center is at y=32. So shift up by 32px.
+    */
+    margin-top: -32px;
+    margin-left: -70px;
+    /* half of 140px width */
+    animation: solarOrbit 25s linear infinite;
+}
+
+/* Evenly space the planets to form an Upright Triangle at start
+   0deg = Right.
+   Top (270deg) -> Delay -18.75s
+   Bottom Right (30deg) -> Delay -2.08s
+   Bottom Left (150deg) -> Delay -10.41s
+*/
+.planet-1 {
+    animation-delay: -18.75s;
+}
+
+.planet-2 {
+    animation-delay: -2.08s;
+}
+
+.planet-3 {
+    animation-delay: -10.41s;
+}
+
+/* Hover effect on Icon only (Scaling) - Rotation continues */
+.orbit-node:hover .node-icon {
+    transform: scale(1.2);
+    border-width: 1.5px;
+    /* Thicker border on hover */
+}
+
+/* Enhanced Glow on Hover */
+.orbit-node:hover .icon-green {
+    box-shadow: 0 0 40px rgba(163, 255, 0, 0.6);
+    background: rgba(10, 25, 47, 0.95);
+}
+
+.orbit-node:hover .icon-cyan {
+    box-shadow: 0 0 40px rgba(63, 226, 156, 0.6);
+    background: rgba(10, 25, 47, 0.95);
+}
+
+.orbit-node:hover .icon-blue {
+    box-shadow: 0 0 40px rgba(0, 207, 255, 0.6);
+    background: rgba(10, 25, 47, 0.95);
+}
+
+/* Typography Glow Boost on Hover */
+.orbit-node:hover h3 {
+    text-shadow: 0 0 20px currentColor;
+    filter: brightness(1.2);
+}
+
+.node-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(10, 25, 47, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Bouncy transition */
+}
+
+/* Fix Icon Placement */
+.node-icon svg {
+    display: block;
+    margin: auto;
+    /* Prevent inline text spacing issues */
+}
+
+.icon-green {
+    border-color: var(--vert);
+    box-shadow: 0 0 15px rgba(163, 255, 0, 0.3);
+}
+
+.icon-cyan {
+    border-color: var(--cyan);
+    box-shadow: 0 0 15px rgba(63, 226, 156, 0.3);
+    /* Adjusted shadow to match var(--cyan) #3FE29C approx */
+}
+
+.icon-blue {
+    border-color: var(--bleu);
+    box-shadow: 0 0 15px rgba(0, 207, 255, 0.3);
+}
+
+/* Typography Coloring - Full Monochrome per planet */
+.node-data h3 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    transition: text-shadow 0.3s ease;
+}
+
+/* Planet 1 (Green) Title */
+.planet-1 h3 {
+    color: var(--vert);
+    text-shadow: 0 0 10px rgba(163, 255, 0, 0.3);
+}
+
+/* Planet 2 (Cyan) Title */
+.planet-2 h3 {
+    color: var(--cyan);
+    text-shadow: 0 0 10px rgba(63, 226, 156, 0.3);
+}
+
+/* Planet 3 (Blue/PMR) Title */
+.planet-3 h3 {
+    color: var(--bleu);
+    text-shadow: 0 0 10px rgba(0, 207, 255, 0.3);
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+}

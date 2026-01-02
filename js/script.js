@@ -17,6 +17,10 @@ window.addEventListener('load', async () => {
     let nbBornesAvecPuissance = 0;
     const deptStats = {}; // Clé: "FR-XX" (ex: FR-69)
 
+    let count24h = 0;
+    let countPayant = 0;
+    let countPMR = 0;
+
     data.forEach(borne => {
         const pdc = borne.nbre_pdc ? parseInt(borne.nbre_pdc) : 1;
         totalPdc += pdc;
@@ -24,6 +28,22 @@ window.addEventListener('load', async () => {
         if (borne.puiss_max) {
             totalPuissance += parseFloat(borne.puiss_max);
             nbBornesAvecPuissance++;
+        }
+
+        // Stats Experience Utilisateur (Solar System)
+        if (borne.accessibilite && borne.accessibilite.toLowerCase().includes('24')) {
+            count24h += pdc;
+        }
+
+        if (borne.acces_recharge && borne.acces_recharge.toLowerCase().includes('payant')) {
+            countPayant += pdc;
+        }
+
+        // PMR detection: Check 'accessibilite' AND 'observations'
+        // Many PMR notes are hidden in observations
+        if ((borne.accessibilite && borne.accessibilite.toLowerCase().includes('pmr')) ||
+            (borne.observations && (borne.observations.toLowerCase().includes('pmr') || borne.observations.toLowerCase().includes('handicap')))) {
+            countPMR += pdc;
         }
 
         // Aggrégation par département via code insee
@@ -35,15 +55,12 @@ window.addEventListener('load', async () => {
             // On prend les 2 premiers caractères
             if (codeDept.length >= 2) {
                 codeDept = codeDept.substring(0, 2);
-                // Si c'est un DOM (97), on pourrait avoir besoin de 3 chiffres, mais la carte semble être France métro
-                // On garde la logique simple FR-XX pour l'instant
             }
 
             const deptKey = `FR-${codeDept}`;
 
             if (!deptStats[deptKey]) {
                 // Initialisation si pas encore rencontré
-                // On essaie de capturer le nom du département s'il est présent dans la donnée
                 deptStats[deptKey] = {
                     count: 0,
                     name: borne.departement || `Département ${codeDept}`
@@ -52,7 +69,7 @@ window.addEventListener('load', async () => {
 
             deptStats[deptKey].count += pdc;
 
-            // Mise å jour du nom si on trouve une donnée plus propre (non vide)
+            // Mise à jour du nom si on trouve une donnée plus propre
             if (borne.departement && deptStats[deptKey].name.startsWith('Département')) {
                 deptStats[deptKey].name = borne.departement;
             }
@@ -143,6 +160,20 @@ window.addEventListener('load', async () => {
 
     // Moyenne de puissance en kW
     const moyennePuissance = nbBornesAvecPuissance > 0 ? (totalPuissance / nbBornesAvecPuissance).toFixed(1) : 0;
+
+    // --- Update Experience Stats (Solar System) ---
+    const pct24h = totalPdc > 0 ? ((count24h / totalPdc) * 100).toFixed(0) : 0;
+    const pctPayant = totalPdc > 0 ? ((countPayant / totalPdc) * 100).toFixed(0) : 0;
+    const pctPMR = totalPdc > 0 ? ((countPMR / totalPdc) * 100).toFixed(2) : 0;
+
+    const statDispo = document.getElementById('stat-dispo');
+    if (statDispo) statDispo.textContent = pct24h + "%";
+
+    const statPayant = document.getElementById('stat-payant');
+    if (statPayant) statPayant.textContent = pctPayant + "%";
+
+    const statPMR = document.getElementById('stat-pmr');
+    if (statPMR) statPMR.textContent = pctPMR + "%";
 
     // Affichage des KPIs globaux
     const vertCard = document.querySelector('.vert.card .value');
