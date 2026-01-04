@@ -1,12 +1,4 @@
-window.addEventListener('load', async () => {
-    // Loader
-    const loader = document.getElementById('loader-wrapper');
-    if (loader) {
-        setTimeout(() => {
-            loader.classList.add('loader-hidden');
-            setTimeout(() => { loader.style.display = 'none'; }, 800);
-        }, 2500);
-    }
+(async () => {
 
     // Récupération des données
     const response = await fetch('js/bornes-irve.json');
@@ -340,7 +332,7 @@ window.addEventListener('load', async () => {
                 <div class="hex-content">
                     <span class="plug-name">${name}</span>
                     <span class="node-percentage">${percentage}%</span>
-                    <span class="plug-count">${Math.round(count).toLocaleString()} pts</span>
+
                 </div>
             `;
             networkContainer.appendChild(node);
@@ -423,4 +415,9 @@ window.addEventListener('load', async () => {
         });
     }
 
-});
+    // Trigger Animations for Dynamic Content
+    if (window.anim && window.anim.refreshObservers) {
+        window.anim.refreshObservers();
+    }
+
+})();
