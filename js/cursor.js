@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Création des éléments du curseur
     const cursor = document.createElement('div');
     cursor.classList.add('custom-cursor');
     document.body.appendChild(cursor);
@@ -13,19 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const posX = e.clientX;
         const posY = e.clientY;
 
-        // Le point suit instantanément
         cursorDot.style.left = `${posX}px`;
         cursorDot.style.top = `${posY}px`;
 
-        // Le cercle suit avec un léger délai (par CSS transition transform 0.1s)
-        // Mais pour plus de fluidité, on peut utiliser requestAnimationFrame ou laisser le CSS faire le lissage si on met à jour les propriétés top/left
-        // Ici on utilise transform pour la perf, mais comme c'est fixed top/left 0, on translate
-        // Pour être simple et éviter le lag JS, on met à jour direct left/top car CSS transition gère le lissage 'transform' a été set dans CSS ? Non, le CSS a transform: translate(-50%, -50%). Donc on doit changer left/top.
-
         cursor.style.left = `${posX}px`;
         cursor.style.top = `${posY}px`;
-
-        // Animation simple (on pourrait faire un lerp pour plus de fluidité style "traînée")
         cursor.animate({
             left: `${posX}px`,
             top: `${posY}px`
@@ -62,4 +52,4 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorDot.style.boxShadow = '0 0 10px var(--vert)';
         }
     });
-});
+

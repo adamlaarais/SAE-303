@@ -1376,13 +1376,10 @@
 
             <div class="experience-container">
                 <div class="orbital-system">
-                    <!-- The large dashed ring path -->
                     <div class="orbit-track"></div>
 
-                    <!-- Central Energy Core: Lightning Bolt -->
                     <div class="core-planet">
-                        <div class="core-pulse"></div>
-                        <!-- Lightning Bolt Icon with Tri-Color Gradient -->
+                        <div class="core-pulse"></div> 
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                             style="filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4));">
                             <defs>
@@ -1399,7 +1396,6 @@
                         </svg>
                     </div>
 
-                    <!-- Planet 1: Disponibilité -->
                     <div class="orbit-node planet planet-1">
                         <div class="node-icon icon-green">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#A3FF00"
@@ -1414,7 +1410,6 @@
                         </div>
                     </div>
 
-                    <!-- Planet 2: Accès Payant -->
                     <div class="orbit-node planet planet-2">
                         <div class="node-icon icon-cyan">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3FE29C"
@@ -1429,10 +1424,8 @@
                         </div>
                     </div>
 
-                    <!-- Planet 3: PMR -->
                     <div class="orbit-node planet planet-3">
                         <div class="node-icon icon-blue">
-                            <!-- User Provided Wheelchair Icon (Filled) -->
                             <svg width="32" height="32" viewBox="0 0 16 16" fill="#00CFFF"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -1443,6 +1436,29 @@
                             <h3>Accessibilité PMR</h3>
                             <span id="stat-pmr" class="stat-value text-blue"></span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="plug-types-network" id="plug-types-container">
+                    <div class="network-core">
+                        <div class="core-icon">
+                            <svg width="45" height="45" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                style="filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.4));">
+                                <defs>
+                                    <linearGradient id="bolt-gradient-hex" x1="0" y1="0" x2="24" y2="24"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0%" stop-color="#A3FF00" />
+                                        <stop offset="50%" stop-color="#3FE29C" />
+                                        <stop offset="100%" stop-color="#00CFFF" />
+                                    </linearGradient>
+                                </defs>
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="url(#bolt-gradient-hex)"
+                                    stroke="url(#bolt-gradient-hex)" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round"></polygon>
+                            </svg>
+                        </div>
+                        <div class="core-label">TYPES DE PRISES</div>
                     </div>
                 </div>
             </div>

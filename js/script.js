@@ -77,7 +77,10 @@ window.addEventListener('load', async () => {
     });
 
     // Top 5 Régions
-    const sortedRegions = Object.values(deptStats).sort((a, b) => b.count - a.count).slice(0, 5);
+    const sortedRegions = Object.entries(deptStats)
+        .map(([code, data]) => ({ ...data, code }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5);
     const topRegionsContainer = document.getElementById('regions-list');
 
     if (topRegionsContainer && sortedRegions.length > 0) {
@@ -86,7 +89,7 @@ window.addEventListener('load', async () => {
         topRegionsContainer.innerHTML = sortedRegions.map((region, index) => {
             const percentage = (region.count / maxCount) * 100;
             return `
-                <div class="region-item" style="transition-delay: ${index * 100}ms">
+                <div class="region-item" style="transition-delay: ${index * 100}ms" data-code="${region.code}">
                     <div class="region-info">
                         <span class="region-name">${region.name}</span>
                         <span class="region-count">${region.count.toLocaleString()}</span>
@@ -97,6 +100,8 @@ window.addEventListener('load', async () => {
                 </div>
             `;
         }).join('');
+
+
     }
 
     // Distribution de la Puissance
@@ -246,6 +251,126 @@ window.addEventListener('load', async () => {
 
 
     // --- KPIs Mise à jour (Dynamic Calculation) ---
+
+    // Plug Types Aggregation (New Logic)
+    const plugTypes = {};
+
+    data.forEach(borne => {
+        // ... existing aggregation ... (I need to be careful not to delete existing loop content if I use replace. Better to insert counting logic IN the existing loop or create a new loop if performance allows. Data size is ~50k lines, one loop is better. But editing the loop reliably with replace is hard if I don't see counting lines.)
+        // Let's create a NEW small loop for plug types to avoid breaking the regex matching of the big loop.
+        // It's client side, iterating 50k items twice is fast enough (ms).
+
+        if (borne.type_prise) {
+            // Rough normalization
+            // Split by common separators: +, /, -, comma, or " et "
+            const rawTypes = borne.type_prise.split(/[\+\/,\-]|\s+et\s+/);
+            const uniqueTypes = new Set();
+
+            rawTypes.forEach(t => {
+                let type = t.trim().toUpperCase();
+                // Simple normalization map
+                if (type.includes('T2') || type.includes('TYPE 2')) type = 'TYPE 2';
+                else if (type.includes('E/F') || type.includes('DOMESTIQUE') || type.includes('EF')) type = 'DOMESTIQUE (E/F)';
+                else if (type.includes('T3')) type = 'TYPE 3';
+                else if (type.includes('CHADEMO')) type = 'CHADEMO';
+                else if (type.includes('COMBO') || type.includes('CCS')) type = 'COMBO CCS';
+
+                if (type.length > 2) { // Filter noise
+                    uniqueTypes.add(type);
+                }
+            });
+
+            if (uniqueTypes.size > 0) {
+                const pdcCount = borne.nbre_pdc ? parseInt(borne.nbre_pdc) : 1;
+                const countPerType = pdcCount / uniqueTypes.size; // Distribute count evenly
+
+                uniqueTypes.forEach(type => {
+                    plugTypes[type] = (plugTypes[type] || 0) + countPerType;
+                });
+            }
+        }
+    });
+
+    const sortedPlugs = Object.entries(plugTypes)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6); // Top 6
+
+    const totalPlugsCount = sortedPlugs.reduce((acc, [_, count]) => acc + count, 0);
+
+    // Render Plug Types Network
+    const networkContainer = document.querySelector('.plug-types-network');
+    if (networkContainer && sortedPlugs.length > 0) {
+
+        // Create SVG container for lines if not exists
+        let svgContainer = networkContainer.querySelector('.network-lines-svg');
+        if (!svgContainer) {
+            svgContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgContainer.classList.add('network-lines-svg');
+            svgContainer.setAttribute('viewBox', '0 0 480 480');
+            networkContainer.insertBefore(svgContainer, networkContainer.firstChild);
+        }
+
+        // Clear previous content to avoid dupes/gradient issues
+        svgContainer.innerHTML = '';
+
+        const centerX = 240;
+        const centerY = 240;
+        const radius = 170; // Slightly tighter radius for hexes
+        const angleStep = (2 * Math.PI) / sortedPlugs.length;
+
+        sortedPlugs.forEach((item, index) => {
+            const [name, count] = item;
+            const percentage = totalPlugsCount > 0 ? ((count / totalPlugsCount) * 100).toFixed(1) : 0;
+
+            // Calculate Position
+            const angle = index * angleStep - (Math.PI / 2);
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+
+            // Create Node
+            const node = document.createElement('div');
+            node.classList.add('branch-node');
+            node.style.left = `${x}px`;
+            node.style.top = `${y}px`;
+            node.style.animationDelay = `${index * 0.1}s`;
+
+            // Hexagon specific HTML content (Timeline Style Structure)
+            node.innerHTML = `
+                <div class="hex-border"></div> <!-- Gradient Border -->
+                <div class="hex-content">
+                    <span class="plug-name">${name}</span>
+                    <span class="node-percentage">${percentage}%</span>
+                    <span class="plug-count">${Math.round(count).toLocaleString()} pts</span>
+                </div>
+            `;
+            networkContainer.appendChild(node);
+
+            // Create Line
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute('x1', centerX);
+            line.setAttribute('y1', centerY);
+            line.setAttribute('x2', x);
+            line.setAttribute('y2', y);
+            line.classList.add('connection-line');
+            line.style.stroke = "rgba(0, 207, 255, 0.5)"; // Solid Cyan with transparency
+            line.style.strokeWidth = "2";
+
+            line.style.strokeDasharray = "500";
+            line.style.strokeDashoffset = "500";
+
+            line.animate([
+                { strokeDashoffset: 500 },
+                { strokeDashoffset: 0 }
+            ], {
+                duration: 800,
+                delay: index * 100 + 500, // Wait for nodes to pop
+                fill: 'forwards',
+                easing: 'ease-out'
+            });
+
+            svgContainer.appendChild(line);
+        });
+    }
 
     const kpiPeriodes = document.getElementById('kpi-periodes');
     const kpiTotal = document.getElementById('kpi-total');

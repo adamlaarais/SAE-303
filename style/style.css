@@ -15,7 +15,6 @@ body {
     line-height: 1.5;
     overflow-x: hidden;
     cursor: none;
-    /* Cache le curseur par défaut */
 }
 
 /* --- Curseur Personnalisé --- */
@@ -33,7 +32,6 @@ body {
     transform: translate(-50%, -50%);
     transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
     mix-blend-mode: normal;
-    /* Changed from difference to stand out more with color */
     box-shadow: 0 0 15px rgba(163, 255, 0, 0.2);
 }
 
@@ -332,7 +330,6 @@ h1 {
 .scroll-icon:hover {
     transform: scale(1.1);
     animation: none;
-    /* Pause bounce on hover */
 }
 
 .scroll-icon svg {
@@ -372,11 +369,13 @@ section p {
     transform-origin: center;
 }
 
+/* Map Hover Effects */
 .france svg path:hover {
     transform: scale(1.1);
     z-index: 10;
     stroke: var(--blanc);
     stroke-width: 4px;
+    cursor: pointer;
 }
 
 /* Tooltip */
@@ -510,7 +509,6 @@ section p {
     background: linear-gradient(90deg, var(--vert), var(--bleu));
     border-radius: 10px;
     width: 0%;
-    /* Animé via JS */
     transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: 0 0 10px rgba(163, 255, 0, 0.3);
 }
@@ -619,13 +617,11 @@ section p {
     width: 100%;
     height: 70%;
     max-width: 1600px;
-    /* Wider container */
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* --- Timeline Hexagon Cyberpunk --- */
-
+/* --- Timeline Hexagon --- */
 .hex-timeline-wrapper {
     flex: 5;
     position: relative;
@@ -664,7 +660,6 @@ section p {
     flex-shrink: 0;
 }
 
-/* HIGH Items (1, 5, 9...) -> nth-child(4n+1) */
 .hex-item:nth-child(4n+1) {
     transform: translateY(-80px);
 }
@@ -673,7 +668,6 @@ section p {
     transform: translateY(-95px) scale(1.1);
 }
 
-/* LOW Items (3, 7, 11...) -> nth-child(4n+3) */
 .hex-item:nth-child(4n+3) {
     transform: translateY(80px);
 }
@@ -697,12 +691,10 @@ section p {
     margin: 0 -35px;
 }
 
-/* Downward Slope (High to Low): Connects Item 1->3 (Pos 2, 10...) -> 4n+2 */
 .hex-connector:nth-child(4n+2) {
     transform: rotate(60deg);
 }
 
-/* Upward Slope (Low to High): Connects Item 3->5 (Pos 4, 12...) -> 4n */
 .hex-connector:nth-child(4n) {
     transform: rotate(-60deg);
 }
@@ -731,7 +723,7 @@ section p {
     justify-content: center;
     align-items: center;
     z-index: 2;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 /* Typography */
@@ -761,17 +753,35 @@ section p {
     opacity: 0.8;
 }
 
-/* --- ANIMATIONS & HOVER --- */
+/* --- ANIMATIONS & HOVER (Timeline) --- */
 
 .hex-item:hover {
     transform: translateY(-15px) scale(1.1);
     z-index: 10;
-    filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.4));
+    filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.3));
+    /* Reduced from 20px/0.4 */
 }
 
 .hex-item:hover .hex-border {
     opacity: 1;
-    filter: brightness(1.5);
+    filter: brightness(1.2);
+    /* Reduced from 1.5 */
+}
+
+/* ... (unchanged) ... */
+
+/* Hover Effects (Experience) */
+.branch-node:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+    z-index: 20;
+    filter: drop-shadow(0 0 8px rgba(0, 207, 255, 0.4));
+    /* Reduced from 15px/0.5 */
+}
+
+.branch-node:hover .hex-border {
+    opacity: 1;
+    filter: brightness(1.2);
+    /* Reduced from 1.3 */
 }
 
 .hex-item:hover .hex-content {
@@ -782,7 +792,6 @@ section p {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-/* Connector Hover Interaction (Optional) */
 .hex-item:hover+.hex-connector,
 .hex-connector:has(+ .hex-item:hover) {
     height: 8px;
@@ -790,7 +799,6 @@ section p {
     filter: brightness(1.5);
 }
 
-/* Keyframes for appearance */
 @keyframes hexPop {
     from {
         opacity: 0;
@@ -943,7 +951,6 @@ section p {
 
 /* Variantes de couleurs strictes */
 
-/* Carte 1: Verte (Périodes) */
 .kpi-card.glow-green {
     border-color: rgba(163, 255, 0, 0.3);
     box-shadow: 0 0 15px rgba(163, 255, 0, 0.1);
@@ -965,7 +972,6 @@ section p {
     text-shadow: 0 0 15px rgba(163, 255, 0, 0.6);
 }
 
-/* Carte 2: Bleue (Total) */
 .kpi-card.glow-blue {
     border-color: rgba(0, 207, 255, 0.3);
     box-shadow: 0 0 15px rgba(0, 207, 255, 0.1);
@@ -987,7 +993,6 @@ section p {
     text-shadow: 0 0 15px rgba(0, 207, 255, 0.6);
 }
 
-/* Carte 3: Cyan (Moyenne) */
 .kpi-card.glow-cyan {
     border-color: rgba(63, 226, 156, 0.3);
     box-shadow: 0 0 15px rgba(63, 226, 156, 0.1);
@@ -1021,7 +1026,7 @@ section p {
     }
 }
 
-/* --- SECTION EXPERIENCE REDESIGN (Orbital Visualization) --- */
+/* --- SECTION EXPERIENCE --- */
 
 .experience {
     position: relative;
@@ -1042,19 +1047,16 @@ section p {
     height: 100%;
 }
 
-/* Orbital System Container */
 .orbital-system {
     position: relative;
-    width: 450px;
+    width: 550px;
     height: 450px;
     display: flex;
     justify-content: center;
     align-items: center;
     transform: translateY(-40px);
-    /* Nudged up slightly for better optical centering */
 }
 
-/* The Orbit Track (Dashed Ring) */
 .orbit-track {
     position: absolute;
     width: 380px;
@@ -1075,7 +1077,6 @@ section p {
     }
 }
 
-/* Central Core */
 .core-planet {
     position: absolute;
     width: 100px;
@@ -1111,7 +1112,6 @@ section p {
     }
 }
 
-/* Orbit Nodes (Satellites) */
 .orbit-node {
     position: absolute;
     display: flex;
@@ -1120,14 +1120,9 @@ section p {
     text-align: center;
     z-index: 10;
     width: 140px;
-    /* Slightly wider to prevent text wrap */
     pointer-events: auto;
 }
 
-
-/* Solar System Animation Logic */
-/* Start at center, Rotate System, Move Out, Rotate Self back */
-/* Radius = 190px (380px track / 2) */
 
 @keyframes solarOrbit {
     from {
@@ -1142,21 +1137,11 @@ section p {
 .planet {
     top: 50%;
     left: 50%;
-    /* Align the center of the ICON (64x64) with the ring.
-       Icon center is at y=32. So shift up by 32px.
-    */
     margin-top: -32px;
     margin-left: -70px;
-    /* half of 140px width */
     animation: solarOrbit 25s linear infinite;
 }
 
-/* Evenly space the planets to form an Upright Triangle at start
-   0deg = Right.
-   Top (270deg) -> Delay -18.75s
-   Bottom Right (30deg) -> Delay -2.08s
-   Bottom Left (150deg) -> Delay -10.41s
-*/
 .planet-1 {
     animation-delay: -18.75s;
 }
@@ -1169,14 +1154,11 @@ section p {
     animation-delay: -10.41s;
 }
 
-/* Hover effect on Icon only (Scaling) - Rotation continues */
 .orbit-node:hover .node-icon {
     transform: scale(1.2);
     border-width: 1.5px;
-    /* Thicker border on hover */
 }
 
-/* Enhanced Glow on Hover */
 .orbit-node:hover .icon-green {
     box-shadow: 0 0 40px rgba(163, 255, 0, 0.6);
     background: rgba(10, 25, 47, 0.95);
@@ -1192,7 +1174,6 @@ section p {
     background: rgba(10, 25, 47, 0.95);
 }
 
-/* Typography Glow Boost on Hover */
 .orbit-node:hover h3 {
     text-shadow: 0 0 20px currentColor;
     filter: brightness(1.2);
@@ -1211,14 +1192,11 @@ section p {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* Bouncy transition */
 }
 
-/* Fix Icon Placement */
 .node-icon svg {
     display: block;
     margin: auto;
-    /* Prevent inline text spacing issues */
 }
 
 .icon-green {
@@ -1229,7 +1207,6 @@ section p {
 .icon-cyan {
     border-color: var(--cyan);
     box-shadow: 0 0 15px rgba(63, 226, 156, 0.3);
-    /* Adjusted shadow to match var(--cyan) #3FE29C approx */
 }
 
 .icon-blue {
@@ -1237,7 +1214,6 @@ section p {
     box-shadow: 0 0 15px rgba(0, 207, 255, 0.3);
 }
 
-/* Typography Coloring - Full Monochrome per planet */
 .node-data h3 {
     margin: 0;
     font-size: 0.85rem;
@@ -1248,25 +1224,193 @@ section p {
     transition: text-shadow 0.3s ease;
 }
 
-/* Planet 1 (Green) Title */
 .planet-1 h3 {
     color: var(--vert);
     text-shadow: 0 0 10px rgba(163, 255, 0, 0.3);
 }
 
-/* Planet 2 (Cyan) Title */
 .planet-2 h3 {
     color: var(--cyan);
     text-shadow: 0 0 10px rgba(63, 226, 156, 0.3);
 }
 
-/* Planet 3 (Blue/PMR) Title */
 .planet-3 h3 {
     color: var(--bleu);
     text-shadow: 0 0 10px rgba(0, 207, 255, 0.3);
 }
 
-.stat-value {
-    font-size: 1.6rem;
+.plug-types-network {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25px;
+}
+
+.network-core {
+    position: absolute;
+    width: 120px;
+    height: 130px;
+    background: radial-gradient(circle, rgba(20, 30, 50, 0.95) 0%, rgba(5, 10, 20, 0.95) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: none;
+}
+
+.network-core::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    background: var(--bleu-fonce);
+    z-index: -1;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.network-core::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(45deg, var(--vert), var(--bleu));
+    z-index: -2;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    animation: hexPulse 3s infinite ease-in-out;
+}
+
+@keyframes hexPulse {
+
+    0%,
+    100% {
+        filter: brightness(1) drop-shadow(0 0 5px rgba(0, 207, 255, 0.5));
+    }
+
+    50% {
+        filter: brightness(1.5) drop-shadow(0 0 15px rgba(0, 207, 255, 0.8));
+    }
+}
+
+.core-icon svg path {
+    stroke: var(--cyan);
+    filter: drop-shadow(0 0 5px var(--cyan));
+}
+
+.core-label {
+    margin-top: 5px;
+    font-size: 0.65rem;
     font-weight: 800;
+    color: var(--blanc);
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    font-family: 'Orbitron', 'Montserrat', sans-serif;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 80%;
+}
+
+/* SVG Container */
+.network-lines-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.connection-line {
+    fill: none;
+    stroke: url(#lineGradient);
+    stroke-width: 1;
+    opacity: 0.5;
+    transition: all 0.5s ease;
+}
+
+.branch-node {
+    position: absolute;
+    width: 115px;
+    height: 130px;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+    cursor: default;
+    transition: all 0.3s ease;
+}
+
+.branch-node .hex-border {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: linear-gradient(to right, var(--vert), var(--bleu));
+    opacity: 0.8;
+    transition: all 0.4s ease;
+}
+
+.branch-node .hex-content {
+    position: absolute;
+    inset: 2px;
+    background-color: rgba(16, 25, 40, 0.95);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+    padding: 0 8px;
+}
+
+/* Hover Effects */
+.branch-node:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+    z-index: 20;
+    filter: drop-shadow(0 0 8px rgba(0, 207, 255, 0.4));
+}
+
+.branch-node:hover .hex-border {
+    opacity: 1;
+    filter: brightness(1.2);
+}
+
+.branch-node:hover .hex-content {
+    background: rgba(20, 30, 50, 1);
+}
+
+.plug-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--blanc);
+    margin-bottom: 2px;
+    text-align: center;
+    line-height: 1.1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    word-break: break-word;
+}
+
+.plug-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--bleu);
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+.node-percentage {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--vert);
+    margin: 0;
+    text-shadow: 0 0 10px rgba(163, 255, 0, 0.3);
+}
+
+/* Animation hover pour les items de la liste */
+.region-item {
+    transition: transform 0.3s ease, background 0.3s;
+    cursor: pointer;
+    border: 1px solid transparent;
+    /* Prevent layout shift */
 }
