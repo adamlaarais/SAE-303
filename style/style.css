@@ -1407,10 +1407,3 @@ section p {
     text-shadow: 0 0 10px rgba(163, 255, 0, 0.3);
 }
 
-/* Animation hover pour les items de la liste */
-.region-item {
-    transition: transform 0.3s ease, background 0.3s;
-    cursor: pointer;
-    border: 1px solid transparent;
-    /* Prevent layout shift */
-}
