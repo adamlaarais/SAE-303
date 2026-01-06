@@ -156,7 +156,7 @@
     });
 
     // Moyenne de puissance en kW
-    const moyennePuissance = nbBornesAvecPuissance > 0 ? (totalPuissance / nbBornesAvecPuissance).toFixed(1) : 0;
+    const moyennePuissance = nbBornesAvecPuissance > 0 ? (totalPuissance / nbBornesAvecPuissance).toFixed(1).replace('.', ',') : 0;
 
     // --- Update Experience Stats (Solar System) ---
     const pct24h = totalPdc > 0 ? ((count24h / totalPdc) * 100).toFixed(0) : 0;
