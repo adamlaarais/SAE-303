@@ -415,9 +415,6 @@
         });
     }
 
-    // Trigger Animations for Dynamic Content
-    if (window.anim && window.anim.refreshObservers) {
-        window.anim.refreshObservers();
-    }
-
 })();
+
+
