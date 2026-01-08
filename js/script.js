@@ -93,6 +93,29 @@
             `;
         }).join('');
 
+        // Add Hover Sync
+        const regionItems = topRegionsContainer.querySelectorAll('.region-item');
+        regionItems.forEach(item => {
+            const code = item.getAttribute('data-code');
+            const mapRegion = document.getElementById(code);
+
+            if (mapRegion) {
+                item.addEventListener('mouseenter', () => {
+                    // Remove active class from all first (safety)
+                    document.querySelectorAll('.france svg .active-region').forEach(p => p.classList.remove('active-region'));
+
+                    // Add to specific
+                    mapRegion.classList.add('active-region');
+
+
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.france svg .active-region').forEach(p => p.classList.remove('active-region'));
+                });
+            }
+        });
+
 
     }
 
@@ -191,8 +214,13 @@
             const id = element.id; // Ex: FR-69
             const deptData = deptStats[id];
 
-            const regionName = deptData ? deptData.name : "Données indisponibles";
+            let regionName = deptData ? deptData.name : "Données indisponibles";
             const count = deptData ? deptData.count : 0;
+
+            // Manual override for missing data regions
+            if (id === 'FR-55' && !deptData) {
+                regionName = 'La Meuse';
+            }
 
             if (tooltip) {
                 tooltip.innerHTML = `
@@ -212,8 +240,8 @@
         element.addEventListener('mousemove', (e) => {
             if (tooltip) {
                 // Positionner le tooltip près de la souris avec un léger décalage pour ne pas gêner
-                tooltip.style.left = `${e.clientX + 15}px`;
-                tooltip.style.top = `${e.clientY + 15}px`;
+                tooltip.style.left = `${e.clientX}px`;
+                tooltip.style.top = `${e.clientY - 40}px`;
             }
         });
 
@@ -233,7 +261,9 @@
             // Format attendu: YYYY-MM-DD
             const year = borne.date_maj.split('-')[0];
             if (year && !isNaN(year)) {
-                majByYear[year] = (majByYear[year] || 0) + 1;
+                // Sum PDCs instead of just counting rows to match user total (18,127 implies capacity)
+                const pdc = borne.nbre_pdc ? parseInt(borne.nbre_pdc) : 1;
+                majByYear[year] = (majByYear[year] || 0) + pdc;
             }
         }
     });

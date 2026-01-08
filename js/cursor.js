@@ -25,12 +25,13 @@ document.addEventListener('mousemove', (e) => {
 // Liste des sélecteurs interactifs (incluant les éléments dynamiques)
 const hoverSelectors = [
     '.france path',
+    '.regions-list',
     '.hex-item',
-    '.battery-visual',   // Charts Power
-    '.orbit-node',       // Experience System (Planets)
-    '.branch-node',      // Plug Network (Hexagons)
-    '.kpi-card',         // KPI Updates
-    '.network-core',     // Center of plug network
+    '.battery-visual',   
+    '.orbit-node',       
+    '.branch-node',      
+    '.kpi-card',         
+    '.network-core',     
     '.scroll-icon'
 ].join(', ');
 

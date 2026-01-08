@@ -51,6 +51,17 @@ function animateHomeEntrance() {
             setTimeout(() => startNumberAnimation(valueEl), 400 + (index * 200));
         });
 
+
+        // Cleanup delays after animation finishes to fix hover lag
+        setTimeout(() => {
+            if (title) title.classList.remove('delay-100');
+            if (subtitle) subtitle.classList.remove('delay-200');
+            if (scrollIcon) scrollIcon.classList.remove('delay-800');
+            if (cards.length > 0) {
+                cards.forEach(card => card.style.transitionDelay = '');
+            }
+        }, 1500);
+
     }, 50);
 }
 
