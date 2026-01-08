@@ -114,3 +114,141 @@ function animateValue(obj, start, end, duration, isKw) {
     };
     window.requestAnimationFrame(step);
 }
+
+// --- Global Scroll Animations ---
+function initScrollAnimations() {
+    const sections = document.querySelectorAll('.carte, .puissance, .experience, .maj'); // Select all main sections
+
+    if (sections.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const section = entry.target;
+
+                    // 1. Title & Subtitle Animation (Global)
+                    const title = section.querySelector('h1');
+                    const subtitle = section.querySelector('p');
+                    if (title) title.classList.add('animate-title');
+                    if (subtitle) subtitle.classList.add('animate-subtitle');
+
+                    // 2. Specific Section Logic
+                    if (section.classList.contains('carte')) {
+                        // Container Animation
+                        const container = document.getElementById('top-regions');
+                        if (container) setTimeout(() => container.classList.add('container-visible'), 200);
+
+                        // Map Animation
+                        const mapPaths = section.querySelectorAll('.france svg path');
+                        mapPaths.forEach((path) => {
+                            const delay = Math.random() * 1000;
+                            setTimeout(() => path.classList.add('map-visible'), delay);
+                        });
+
+                        // List Animation
+                        const listItems = section.querySelectorAll('.region-item');
+                        listItems.forEach((item, index) => {
+                            const delay = index * 200;
+                            setTimeout(() => {
+                                item.classList.add('item-visible');
+                                const bar = item.querySelector('.bar-fill');
+                                if (bar && bar.dataset.width) {
+                                    setTimeout(() => bar.style.width = bar.dataset.width, 300);
+                                }
+                            }, delay + 500);
+                        });
+                    }
+
+                    // 3. Puissance Section Logic (Batteries)
+                    if (section.classList.contains('puissance')) {
+                        const batteries = section.querySelectorAll('.battery-bar');
+                        const containers = section.querySelectorAll('.battery-visual');
+
+                        // Animate Containers First
+                        containers.forEach((container, index) => {
+                            setTimeout(() => {
+                                container.classList.add('container-visible');
+                            }, index * 100);
+                        });
+
+                        // Then Animate Bars (slightly delayed to start after container appears)
+                        batteries.forEach((bar, index) => {
+                            // Calculate global stagger for effect
+                            const delay = 300 + (index * 30);
+                            setTimeout(() => {
+                                bar.classList.add('battery-visible');
+                            }, delay);
+                        });
+                    }
+
+                    // 4. Experience Section Logic (Solar & Network)
+                    if (section.classList.contains('experience')) {
+
+                        // Solar System (Galactic Expansion)
+                        const solarSystem = section.querySelector('.orbital-system');
+                        if (solarSystem) {
+                            setTimeout(() => solarSystem.classList.add('solar-visible'), 200);
+
+                            // Synchronized Stagger (Start at 0.3s, fast pop)
+                            const nodes = solarSystem.querySelectorAll('.orbit-node');
+                            nodes.forEach((node, i) => {
+                                node.style.transitionDelay = `${0.3 + (i * 0.1)}s`;
+                            });
+                        }
+
+                        // Plug Network (Simple Pop)
+                        const network = section.querySelector('.plug-types-network');
+                        if (network) {
+                            setTimeout(() => network.classList.add('network-visible'), 200);
+
+                            // Synchronized Stagger (Start at 0.3s, matches Solar System)
+                            const branchNodes = network.querySelectorAll('.branch-node');
+                            branchNodes.forEach((node, i) => {
+                                node.style.transitionDelay = `${0.3 + (i * 0.1)}s`;
+                            });
+                        }
+                    }
+
+                    // 5. Updates Section Logic (Timeline & KPIs)
+                    if (section.classList.contains('maj')) {
+                        const timeline = section.querySelector('.hex-timeline');
+                        const kpiContainer = section.querySelector('.kpi-container');
+
+                        // Animate Timeline Items & Connectors (1 by 1)
+                        if (timeline) {
+                            setTimeout(() => timeline.classList.add('timeline-visible'), 200);
+
+                            // Select ALL children (items + connectors) in order
+                            const children = timeline.querySelectorAll('.hex-item, .hex-connector');
+                            children.forEach((child, index) => {
+                                child.style.transitionDelay = `${index * 0.1}s`; // Faster, smoother flow
+                            });
+                        }
+
+                        // Animate KPI Cards (Simple Pop)
+                        if (kpiContainer) {
+                            setTimeout(() => kpiContainer.classList.add('kpi-visible'), 400);
+                            const cards = kpiContainer.querySelectorAll('.kpi-card');
+                            cards.forEach((card, index) => {
+                                card.style.transitionDelay = `${0.2 + (index * 0.1)}s`;
+                                const val = card.querySelector('.kpi-value');
+                                setTimeout(() => startNumberAnimation(val), 500 + (index * 100));
+                            });
+                        }
+                    }
+
+                    observer.unobserve(section); // Run once per section
+                }
+            });
+        }, { threshold: 0.3 });
+
+        sections.forEach(section => observer.observe(section));
+    }
+}
+
+window.addEventListener('load', () => {
+    initScrollAnimations();
+});
+
+window.addEventListener('dashboardReady', () => {
+    setTimeout(initScrollAnimations, 100);
+});

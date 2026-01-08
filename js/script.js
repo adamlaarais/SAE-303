@@ -81,13 +81,13 @@
         topRegionsContainer.innerHTML = sortedRegions.map((region, index) => {
             const percentage = (region.count / maxCount) * 100;
             return `
-                <div class="region-item" style="transition-delay: ${index * 100}ms" data-code="${region.code}">
+                <div class="region-item" data-code="${region.code}">
                     <div class="region-info">
                         <span class="region-name">${region.name}</span>
                         <span class="region-count">${region.count.toLocaleString()}</span>
                     </div>
                     <div class="bar-container">
-                        <div class="bar-fill" style="width: ${percentage}%"></div>
+                        <div class="bar-fill" data-width="${percentage}%"></div>
                     </div>
                 </div>
             `;
@@ -345,20 +345,9 @@
             line.setAttribute('y2', y);
             line.classList.add('connection-line');
             line.style.stroke = "rgba(0, 207, 255, 0.5)"; // Solid Cyan with transparency
-            line.style.strokeWidth = "2";
 
-            line.style.strokeDasharray = "500";
-            line.style.strokeDashoffset = "500";
-
-            line.animate([
-                { strokeDashoffset: 500 },
-                { strokeDashoffset: 0 }
-            ], {
-                duration: 800,
-                delay: index * 100 + 500, // Wait for nodes to pop
-                fill: 'forwards',
-                easing: 'ease-out'
-            });
+            // Animation handled by CSS class .network-visible via js/anim.js
+            // line.animate() removed to respect scroll trigger
 
             svgContainer.appendChild(line);
         });
@@ -415,6 +404,8 @@
         });
     }
 
+    // --- End of Data Processing ---
+    console.log("Dashboard Loaded");
+    window.dispatchEvent(new Event('dashboardReady'));
+
 })();
-
-

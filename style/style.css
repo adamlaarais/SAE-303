@@ -754,26 +754,19 @@ section p {
     width: 140px;
     height: 160px;
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.2s ease-out, filter 0.2s ease-out;
     z-index: 2;
-    animation: hexPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
     flex-shrink: 0;
+    background-color: var(--bleu-fond);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
 .hex-item:nth-child(4n+1) {
     transform: translateY(-80px);
 }
 
-.hex-item:nth-child(4n+1):hover {
-    transform: translateY(-95px) scale(1.1);
-}
-
 .hex-item:nth-child(4n+3) {
     transform: translateY(80px);
-}
-
-.hex-item:nth-child(4n+3):hover {
-    transform: translateY(65px) scale(1.1);
 }
 
 /* CONNECTORS */
@@ -783,7 +776,7 @@ section p {
     background: linear-gradient(to right, #00E5FF, #A6FF00);
     background-attachment: fixed;
     opacity: 0.6;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
     position: relative;
@@ -855,56 +848,9 @@ section p {
 
 /* --- ANIMATIONS & HOVER (Timeline) --- */
 
-.hex-item:hover {
-    transform: translateY(-15px) scale(1.1);
-    z-index: 10;
-    filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.3));
-    /* Balanced Glow */
-}
+/* --- ANIMATIONS & HOVER (Timeline) - REMOVED per user request --- */
 
-.hex-item:hover .hex-border {
-    opacity: 1;
-    filter: brightness(1.2);
-}
-
-.branch-node:hover {
-    transform: translate(-50%, -50%) scale(1.15);
-    z-index: 20;
-    filter: drop-shadow(0 0 8px rgba(0, 207, 255, 0.4));
-    /* Balanced Glow */
-}
-
-.branch-node:hover .hex-border {
-    opacity: 1;
-    filter: brightness(1.2);
-}
-
-.hex-item:hover .hex-content {
-    background: rgba(26, 26, 46, 0.95);
-}
-
-.hex-item:hover .hex-data {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
-.hex-item:hover+.hex-connector,
-.hex-connector:has(+ .hex-item:hover) {
-    height: 8px;
-    opacity: 0.8;
-    filter: brightness(1.5);
-}
-
-@keyframes hexPop {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+/* hexPop keyframes removed in favor of transitions */
 
 @keyframes lineGrow {
     from {
@@ -925,17 +871,6 @@ section p {
     font-weight: 600;
     color: var(--gris);
     transition: color 0.3s ease;
-}
-
-.node:hover .node-value {
-    opacity: 1;
-    transform: translateY(-10px);
-    text-shadow: 0 0 10px var(--vert);
-}
-
-.node:hover .node-year {
-    color: var(--vert);
-    font-weight: 800;
 }
 
 /* Valeurs (Mises à jour) */
@@ -964,11 +899,6 @@ section p {
     opacity: 0;
 }
 
-.node:hover::before {
-    height: 15px;
-    opacity: 1;
-}
-
 /* KPI Cards Container */
 .kpi-container {
     display: flex;
@@ -993,10 +923,17 @@ section p {
     justify-content: center;
     position: relative;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+    /* Smooth Tech Ease */
     border: 2px solid transparent;
     overflow: hidden;
+    /* Essential for glare effect */
 }
+
+/* Glare Effect */
+/* Glare Effect Removed per user request */
+/* .kpi-card::after block removed */
+
 
 .kpi-card::before {
     content: '';
@@ -1004,24 +941,12 @@ section p {
     inset: 0;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
     opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.kpi-card:hover {
-    transform: translateY(-8px) scale(1.02);
-}
-
-.kpi-card:hover::before {
-    opacity: 1;
+    transition: opacity 0.2s ease;
 }
 
 .kpi-icon {
     margin-bottom: 5px;
-    transition: transform 0.4s ease;
-}
-
-.kpi-card:hover .kpi-icon {
-    transform: scale(1.1) rotate(5deg);
+    transition: transform 0.2s ease;
 }
 
 .kpi-value {
@@ -1029,7 +954,7 @@ section p {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 5px;
-    transition: text-shadow 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .kpi-label {
@@ -1037,79 +962,40 @@ section p {
     font-size: 0.85rem;
     text-align: center;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
+    z-index: 2;
 }
 
-.kpi-card:hover .kpi-label {
-    color: var(--blanc);
-}
+/* Variantes de couleurs - NEON TECH */
 
-/* Variantes de couleurs strictes */
-
+/* Green Variation */
 .kpi-card.glow-green {
-    border-color: rgba(163, 255, 0, 0.3);
-    box-shadow: 0 0 15px rgba(163, 255, 0, 0.1);
-}
-
-.kpi-card.glow-green:hover {
     border-color: var(--vert);
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(163, 255, 0, 0.3),
-        inset 0 0 15px rgba(163, 255, 0, 0.1);
-    /* Balanced Glow */
+    box-shadow: 0 0 0 rgba(163, 255, 0, 0);
 }
 
 .kpi-card.glow-green .kpi-value {
     color: var(--vert);
 }
 
-.kpi-card.glow-green:hover .kpi-value {
-    text-shadow: 0 0 15px rgba(163, 255, 0, 0.6);
-}
-
+/* Blue Variation */
 .kpi-card.glow-blue {
-    border-color: rgba(0, 207, 255, 0.3);
-    box-shadow: 0 0 15px rgba(0, 207, 255, 0.1);
-}
-
-.kpi-card.glow-blue:hover {
     border-color: var(--bleu);
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(0, 207, 255, 0.3),
-        inset 0 0 15px rgba(0, 207, 255, 0.1);
-    /* Balanced Glow */
+    box-shadow: 0 0 0 rgba(0, 207, 255, 0);
 }
 
 .kpi-card.glow-blue .kpi-value {
     color: var(--bleu);
 }
 
-.kpi-card.glow-blue:hover .kpi-value {
-    text-shadow: 0 0 15px rgba(0, 207, 255, 0.6);
-}
-
+/* Cyan Variation */
 .kpi-card.glow-cyan {
-    border-color: rgba(63, 226, 156, 0.3);
-    box-shadow: 0 0 15px rgba(63, 226, 156, 0.1);
-}
-
-.kpi-card.glow-cyan:hover {
     border-color: #3FE29C;
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(63, 226, 156, 0.3),
-        inset 0 0 15px rgba(63, 226, 156, 0.1);
-    /* Balanced Glow */
+    box-shadow: 0 0 0 rgba(63, 226, 156, 0);
 }
 
 .kpi-card.glow-cyan .kpi-value {
     color: #3FE29C;
-}
-
-.kpi-card.glow-cyan:hover .kpi-value {
-    text-shadow: 0 0 15px rgba(63, 226, 156, 0.6);
 }
 
 @keyframes fadeInUp {
@@ -1319,7 +1205,7 @@ section p {
     margin-bottom: 2px;
     letter-spacing: 0.5px;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    transition: text-shadow 0.3s ease;
+    transition: text-shadow 0.2s ease;
 }
 
 .planet-1 h3 {
@@ -1426,7 +1312,7 @@ section p {
     stroke: url(#lineGradient);
     stroke-width: 1;
     opacity: 0.5;
-    transition: all 0.5s ease;
+    transition: opacity 0.2s ease-out;
 }
 
 .branch-node {
@@ -1436,7 +1322,7 @@ section p {
     z-index: 5;
     transform: translate(-50%, -50%);
     cursor: default;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease-out, filter 0.2s ease-out;
 }
 
 .branch-node .hex-border {
@@ -1445,7 +1331,7 @@ section p {
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background: linear-gradient(to right, var(--vert), var(--bleu));
     opacity: 0.8;
-    transition: all 0.4s ease;
+    transition: opacity 0.2s ease-out, filter 0.2s ease-out;
 }
 
 .branch-node .hex-content {
@@ -1457,15 +1343,13 @@ section p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 2;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease-out;
     padding: 0 8px;
 }
 
 /* Hover Effects */
 .branch-node:hover {
     transform: translate(-50%, -50%) scale(1.15);
-    z-index: 20;
     filter: drop-shadow(0 0 8px rgba(0, 207, 255, 0.4));
 }
 
@@ -1506,17 +1390,17 @@ section p {
 }
 
 .text-green {
-    color: var(--vert) !important;
+    color: var(--vert);
     text-shadow: 0 0 10px rgba(163, 255, 0, 0.5);
 }
 
 .text-cyan {
-    color: var(--cyan) !important;
+    color: var(--cyan);
     text-shadow: 0 0 10px rgba(63, 226, 156, 0.5);
 }
 
 .text-blue {
-    color: var(--bleu) !important;
+    color: var(--bleu);
     text-shadow: 0 0 10px rgba(0, 207, 255, 0.5);
 }
 
@@ -1556,14 +1440,12 @@ section p {
 }
 
 /* --- Entrance Animations (Home) --- */
-/* --- Entrance Animations (Pop Up Style) --- */
 .entrance-hidden {
     opacity: 0;
     transform: scale(0.8) translateY(20px);
     transition:
         opacity 0.5s ease-out,
         transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* Bouncy Pop */
 }
 
 .entrance-visible {
@@ -1601,4 +1483,163 @@ section p {
 
 .delay-800 {
     transition-delay: 800ms;
+}
+
+/* --- Scroll Animations (Restored) --- */
+
+/* 1. Carte Section */
+#top-regions {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+#top-regions.container-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.france svg path {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s ease-out;
+}
+
+.france svg path.map-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.region-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s ease-out;
+}
+
+.region-item.item-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 2. Puissance Section */
+.battery-visual {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+}
+
+.battery-visual.container-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.battery-bar {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: all 0.6s ease-out;
+}
+
+.battery-bar.battery-visible {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+/* 3. Experience Section */
+.orbital-system {
+    opacity: 0;
+    transform: scale(0.9) translateY(-40px);
+    /* Keep translateY(-40px) alignment */
+    transition: all 0.8s ease-out;
+}
+
+.orbital-system.solar-visible {
+    opacity: 1;
+    transform: scale(1) translateY(-40px);
+}
+
+.orbit-node {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.orbital-system.solar-visible .orbit-node {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.plug-types-network {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.8s ease-out;
+}
+
+.plug-types-network.network-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.branch-node {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.plug-types-network.network-visible .branch-node {
+    opacity: 1;
+    /* Note: transform handled by base class, check conflict */
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* 4. Mise à jour (Timeline) */
+.hex-timeline {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.hex-timeline.timeline-visible {
+    opacity: 1;
+}
+
+/* Items initially hidden */
+.hex-item,
+.hex-connector {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Visible State tied to parent class addition in JS */
+.hex-timeline.timeline-visible .hex-item,
+.hex-timeline.timeline-visible .hex-connector {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hex-timeline.timeline-visible .hex-item:nth-child(4n+1) {
+    transform: translateY(-80px);
+}
+
+.hex-timeline.timeline-visible .hex-item:nth-child(4n+3) {
+    transform: translateY(80px);
+}
+
+.hex-timeline.timeline-visible .hex-connector:nth-child(4n+2) {
+    transform: rotate(60deg);
+}
+
+.hex-timeline.timeline-visible .hex-connector:nth-child(4n) {
+    transform: rotate(-60deg);
+}
+
+.kpi-container {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.6s ease-out;
+}
+
+.kpi-container.kpi-visible {
+    opacity: 1;
+    transform: translateX(0);
 }
