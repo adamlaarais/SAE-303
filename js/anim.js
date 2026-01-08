@@ -222,6 +222,11 @@ function initScrollAnimations() {
                             children.forEach((child, index) => {
                                 child.style.transitionDelay = `${index * 0.1}s`; // Faster, smoother flow
                             });
+
+                            // Cleanup: Remove delay after animation so hover is instant
+                            setTimeout(() => {
+                                children.forEach(child => child.style.transitionDelay = '');
+                            }, 2000);
                         }
 
                         // Animate KPI Cards (Simple Pop)
@@ -233,6 +238,11 @@ function initScrollAnimations() {
                                 const val = card.querySelector('.kpi-value');
                                 setTimeout(() => startNumberAnimation(val), 500 + (index * 100));
                             });
+
+                            // Cleanup: Remove delay after animation
+                            setTimeout(() => {
+                                cards.forEach(card => card.style.transitionDelay = '');
+                            }, 2000);
                         }
                     }
 
