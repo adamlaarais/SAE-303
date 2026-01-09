@@ -269,7 +269,3 @@ function initScrollAnimations() {
 window.addEventListener('load', () => {
     initScrollAnimations();
 });
-
-window.addEventListener('dashboardReady', () => {
-    setTimeout(initScrollAnimations, 100);
-});
