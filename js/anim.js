@@ -34,7 +34,9 @@ function animateHomeEntrance() {
     // Trigger Visibility
     // Small timeout to Ensure CSS load and Layout paint
     setTimeout(() => {
-        // Background Fade (Removed - Static now)
+        // Background Fade - Enable PCB
+        const circuitCanvas = document.getElementById('circuit-canvas');
+        if (circuitCanvas) circuitCanvas.style.opacity = '1';
 
 
         if (title) title.classList.add('entrance-visible');

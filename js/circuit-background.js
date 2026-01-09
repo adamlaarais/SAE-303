@@ -40,17 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resize);
 
     // --- Hide/Show Logic ---
-    function updateVisibility() {
-        // Show circuit only when scrolled past the home section (approx 50% of viewport)
-        if (window.scrollY > window.innerHeight * 0.5) {
-            canvas.style.opacity = '1';
-        } else {
-            canvas.style.opacity = '0';
-        }
-    }
-
-    window.addEventListener('scroll', updateVisibility);
-    updateVisibility(); // Init
+    // Removed to allow background on Home Section
+    canvas.style.opacity = '1';
 
     // --- Generation Logic ---
 
