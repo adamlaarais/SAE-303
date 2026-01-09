@@ -105,8 +105,6 @@ section {
     scroll-snap-stop: always;
 }
 
-
-
 #loader-wrapper {
     position: fixed;
     inset: 0;
@@ -570,7 +568,6 @@ section p {
     padding: 10px;
     border-radius: 8px;
     transition: all 0.3s ease;
-    cursor: pointer;
     border: 2px solid transparent;
 }
 
