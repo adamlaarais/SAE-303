@@ -34,9 +34,8 @@ function animateHomeEntrance() {
     // Trigger Visibility
     // Small timeout to Ensure CSS load and Layout paint
     setTimeout(() => {
-        // Background Fade
-        const accueilSection = document.getElementById('accueil');
-        if (accueilSection) accueilSection.classList.add('bg-visible');
+        // Background Fade (Removed - Static now)
+
 
         if (title) title.classList.add('entrance-visible');
         if (subtitle) subtitle.classList.add('entrance-visible');
@@ -146,26 +145,26 @@ function initScrollAnimations() {
                     if (section.classList.contains('carte')) {
                         // Container Animation
                         const container = document.getElementById('top-regions');
-                        if (container) setTimeout(() => container.classList.add('container-visible'), 200);
+                        if (container) setTimeout(() => container.classList.add('container-visible'), 50);
 
                         // Map Animation
                         const mapPaths = section.querySelectorAll('.france svg path');
                         mapPaths.forEach((path) => {
-                            const delay = Math.random() * 1000;
+                            const delay = Math.random() * 600; // Faster map reveal
                             setTimeout(() => path.classList.add('map-visible'), delay);
                         });
 
                         // List Animation
                         const listItems = section.querySelectorAll('.region-item');
                         listItems.forEach((item, index) => {
-                            const delay = index * 200;
+                            const delay = index * 100; // Faster stagger
                             setTimeout(() => {
                                 item.classList.add('item-visible');
                                 const bar = item.querySelector('.bar-fill');
                                 if (bar && bar.dataset.width) {
-                                    setTimeout(() => bar.style.width = bar.dataset.width, 300);
+                                    setTimeout(() => bar.style.width = bar.dataset.width, 100);
                                 }
-                            }, delay + 500);
+                            }, delay + 200); // Shorter base delay
                         });
                     }
 
@@ -260,7 +259,7 @@ function initScrollAnimations() {
                     observer.unobserve(section); // Run once per section
                 }
             });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.15 });
 
         sections.forEach(section => observer.observe(section));
     }
