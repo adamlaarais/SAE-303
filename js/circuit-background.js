@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const config = {
         gridSize: 30,
-        // Colors: All Blues, very subtle
-        traceColor: 'rgba(0, 120, 255, 0.35)', // Much more visible traces and points
-        chipColor: 'rgba(15, 25, 45, 0.6)',
-        chipBorder: 'rgba(0, 100, 255, 0.4)', // Brighter border
-        pinColor: 'rgba(0, 150, 255, 0.4)', // Brighter pins
-        pulseColors: ['#0055FF', '#0099FF', '#002288'], // Deep to mid blues, no bright cyan/white
+        // Colors: Cyan Blue #00CFF9
+        traceColor: 'rgba(0, 207, 249, 0.35)',
+        chipColor: 'rgba(5, 20, 30, 0.6)',
+        chipBorder: 'rgba(0, 207, 249, 0.4)',
+        pinColor: 'rgba(0, 207, 249, 0.4)',
+        pulseColors: ['#00CFF9', '#0099CC', '#006699'], // Shades of Cyan
         pulseSpeed: 2, // Slower for background feel
         pulseChance: 0.04, // Less busy
         glowRadius: 0 // Removed interactivity
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Hide/Show Logic ---
     // Removed to allow background on Home Section
-    canvas.style.opacity = '1';
+    // canvas.style.opacity = '1';
 
     // --- Generation Logic ---
 

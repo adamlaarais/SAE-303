@@ -6,20 +6,35 @@ const cursorDot = document.createElement('div');
 cursorDot.classList.add('custom-cursor-dot');
 document.body.appendChild(cursorDot);
 
+// Flag pour l'initialisation
+let isCursorVisible = false;
+
 // Mouvement du curseur
 document.addEventListener('mousemove', (e) => {
     const posX = e.clientX;
     const posY = e.clientY;
 
-    cursorDot.style.left = `${posX}px`;
-    cursorDot.style.top = `${posY}px`;
+    if (!isCursorVisible) {
+        // Premier mouvement : on affiche et on place INSTANTANÉMENT
+        cursor.style.opacity = '1';
+        cursorDot.style.opacity = '1';
 
-    cursor.style.left = `${posX}px`;
-    cursor.style.top = `${posY}px`;
-    cursor.animate({
-        left: `${posX}px`,
-        top: `${posY}px`
-    }, { duration: 500, fill: "forwards" });
+        cursor.style.left = `${posX}px`;
+        cursor.style.top = `${posY}px`;
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        isCursorVisible = true;
+    } else {
+        // Mouvements suivants : animation fluide
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        cursor.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 500, fill: "forwards" });
+    }
 });
 
 // Liste des sélecteurs interactifs (incluant les éléments dynamiques)
@@ -27,11 +42,11 @@ const hoverSelectors = [
     '.france path',
     '.regions-list',
     '.hex-item',
-    '.battery-visual',   
-    '.orbit-node',       
-    '.branch-node',      
-    '.kpi-card',         
-    '.network-core',     
+    '.battery-visual',
+    '.orbit-node',
+    '.branch-node',
+    '.kpi-card',
+    '.network-core',
     '.scroll-icon'
 ].join(', ');
 
