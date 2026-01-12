@@ -261,9 +261,8 @@
             // Format attendu: YYYY-MM-DD
             const year = borne.date_maj.split('-')[0];
             if (year && !isNaN(year)) {
-                // Sum PDCs instead of just counting rows to match user total (18,127 implies capacity)
-                const pdc = borne.nbre_pdc ? parseInt(borne.nbre_pdc) : 1;
-                majByYear[year] = (majByYear[year] || 0) + pdc;
+                // Count records instead of PDCs for accurate update statistics
+                majByYear[year] = (majByYear[year] || 0) + 1;
             }
         }
     });
