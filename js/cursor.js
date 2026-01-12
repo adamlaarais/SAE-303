@@ -61,8 +61,8 @@ document.body.addEventListener('mouseover', (e) => {
         cursorDot.style.boxShadow = '0 0 15px var(--blanc)';
     } else {
         cursor.classList.remove('hover');
-        cursorDot.style.backgroundColor = 'var(--vert)';
-        cursorDot.style.boxShadow = '0 0 10px var(--vert)';
+        cursorDot.style.backgroundColor = 'var(--bleu)';
+        cursorDot.style.boxShadow = '0 0 10px var(--bleu)';
     }
 });
 

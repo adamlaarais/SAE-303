@@ -1,13 +1,5 @@
-/**
- * DataWatt High-Tech PCB Background Animation
- * Renders a realistic printed circuit board effect with orthogonal/diagonal traces,
- * components with pins, and guided current pulses with trails.
- */
-
-document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('circuit-canvas');
-    if (!canvas) return;
-
+const canvas = document.getElementById('circuit-canvas');
+if (canvas) {
     const ctx = canvas.getContext('2d');
     let width, height;
 
@@ -301,4 +293,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resize();
     requestAnimationFrame(draw);
-});
+}

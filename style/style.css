@@ -46,7 +46,6 @@ body {
     z-index: 100000;
     transform: translate(-50%, -50%);
     opacity: 0;
-    /* Hidden by default */
     transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
     mix-blend-mode: normal;
     box-shadow: 0 0 15px rgba(0, 207, 249, 0.2);
@@ -359,7 +358,7 @@ h1 {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: var(--bleu-fond);
+    background-color: var(--bleu-fonce);
     border: 2px solid var(--bleu);
     display: flex;
     justify-content: center;
@@ -1186,7 +1185,7 @@ section p {
     width: 380px;
     height: 380px;
     border: 2px dashed rgba(0, 207, 249, 0.3);
-    background-color: var(--bleu-fonce);
+    background-color: var(--bleu-fond);
     border-radius: 50%;
     animation: orbitSpin 60s linear infinite;
     z-index: 1;
@@ -1309,7 +1308,7 @@ section p {
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: rgba(10, 25, 47, 0.9);
+    background: var(--bleu-fonce);
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: center;
@@ -1411,7 +1410,7 @@ section p {
     content: '';
     position: absolute;
     inset: 1px;
-    background: var(--bleu-fonce);
+    background: var(--bleu-fond);
     z-index: -1;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
