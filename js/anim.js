@@ -182,13 +182,12 @@ function initScrollAnimations() {
                             }, index * 100);
                         });
 
-                        // Then Animate Bars (slightly delayed to start after container appears)
-                        batteries.forEach((bar, index) => {
-                            // Calculate global stagger for effect
-                            const delay = 300 + (index * 30);
+                        // Then Animate Bars (Simple charging trigger)
+                        // The delay is handled by CSS transition-delay on children
+                        containers.forEach((container, index) => {
                             setTimeout(() => {
-                                bar.classList.add('battery-visible');
-                            }, delay);
+                                container.classList.add('charging');
+                            }, 500 + (index * 200)); // Stagger the start of each battery
                         });
                     }
 

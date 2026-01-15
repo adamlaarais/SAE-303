@@ -167,7 +167,7 @@
                     const bar = document.createElement('div');
                     bar.className = 'battery-bar';
                     // Petite variation de délai pour l'effet "stack"
-                    bar.style.animationDelay = `${i * 0.1}s`;
+                    bar.style.transitionDelay = `${i * 0.15}s`;
                     // Espace entre les barres géré par margin-top (flex-col-reverse)
                     bar.style.marginTop = '4px';
                     bar.style.height = '8%'; // Hauteur relative
