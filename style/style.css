@@ -1581,7 +1581,9 @@ section p {
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.5s ease;
-    overflow: hidden;
+    /* overflow: hidden; Removed to allow bolt to stick out */
+    display: flex;
+    justify-content: center;
 }
 
 .scroll-progress-bar {
@@ -1592,8 +1594,20 @@ section p {
     position: absolute;
     top: 0;
     left: 0;
-    transition: height 0.1s linear;
+    /* transition: height 0.1s linear; Removed for instant sync with scroll */
     box-shadow: 0 0 10px rgba(163, 255, 0, 0.5);
+}
+
+.scroll-bolt {
+    position: absolute;
+    bottom: -15px;
+    /* Adjust to center vertically on the end */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: auto;
+    filter: drop-shadow(0 0 5px var(--vert));
+    z-index: 1001;
 }
 
 /* --- Entrance Animations (Home) --- */
